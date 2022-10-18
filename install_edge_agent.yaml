@@ -5,19 +5,17 @@
     - name: "apt-get updates"
       shell: |
         sudo apt-get update
-
-        sudo apt install curl -y
-
-        curl https://packages.microsoft.com/config/ubuntu/18.04/multiarch/prod.list > ~/microsoft-prod.list
-
-        sudo cp ~/microsoft-prod.list /etc/apt/sources.list.d/
-
+        sudo apt-get install curl ca-certificates gnupg lsb-release -y
         curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > ~/microsoft.gpg
-
         sudo cp ~/microsoft.gpg /etc/apt/trusted.gpg.d/
-
-        sudo apt-get update
+        curl https://packages.microsoft.com/config/debian/11/packages-microsoft-prod.deb > ./packages-microsoft-prod.deb
+        sudo apt install ./packages-microsoft-prod.deb
+        sudo apt-get update --fix-missing -y
     - name: "Install moby container engine"
       shell: sudo apt-get install moby-engine -y
+    # - name: "uninstall previous versions of docker"
+    #   shell: sudo apt-get remove docker docker-engine docker.io containerd runc
+    # - name: "install docker ce"
+    #   shell: curl -fsSL get.docker.com -o get-docker.sh && sh get-docker.sh
     - name: "Install IoT Edge Runtime"
       shell: sudo apt-get install aziot-edge -y

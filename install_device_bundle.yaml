@@ -11,7 +11,7 @@
     - name: "untar device bundle"
       raw: cd edge-config && tar zxvf {{ device_id }}.tgz
     - name: "run device config script"
-      raw: sudo bash edge-config/install.sh
+      raw: cd edge-config && sudo bash install.sh
       register: edge_result
     - debug:
         var: edge_result.stdout_lines

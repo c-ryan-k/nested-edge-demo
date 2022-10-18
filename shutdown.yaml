@@ -1,0 +1,6 @@
+- name: "Safe shutdown"
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: "send shutdown"
+      raw: sudo shutdown 0

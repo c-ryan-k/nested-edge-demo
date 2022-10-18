@@ -17,14 +17,15 @@ configuration:
 ## Hierarchy of IoT Edge devices to create
 edgedevices:
   - device_id: pi_1
-    edge_agent: "mcr.microsoft.com/azureiotedge-agent:1.2"
     hostname: "10.120.60.53"
+    edge_agent: "mcr.microsoft.com/azureiotedge-agent:1.2"
+    deployment: deployment-top.json
     child:
       - device_id: pi_2
-        edge_agent: "mcr.microsoft.com/azureiotedge-agent:1.2"
-        hostname: "10.120.60.61"
+        hostname: "10.120.60.51"
+        deployment: deployment-mid.json
         child:
           - device_id: pi_3
-            edge_agent: "mcr.microsoft.com/azureiotedge-agent:1.2"
-            hostname: "10.120.62.63"
+            hostname: "10.120.60.61"
+            deployment: deployment-low.json
     

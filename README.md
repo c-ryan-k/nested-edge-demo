@@ -21,10 +21,10 @@
 ## Steps
 ### 1. [Config] 
 Make sure all devices are online and pingable. Since we're installing the Edge Agent and setting up a separate user inside ansible tasks, the only configuration these devices need are a relatively stable IP address.
-### 2. [Ansible] - setup users and ssh access
-This step will setup an `edge-user` user on each device, copy a key to each device's authorized_keys store, and enable the user for sudo permission (to run device bundle scripts)
-### 3. [Ansible] - known hosts config
+### 2. [Ansible] - known hosts config
 This step will scan all hosts for their public keys, and add them to the controlling node's `known_hosts`. This allows us to ssh between devices without being prompted.
+### 3. [Ansible] - setup users and ssh access
+This step will setup an `edge-user` user on each device, copy a key to each device's authorized_keys store, and enable the user for sudo permission (to run device bundle scripts)
 ### 4. [Ansible] - Install IoT Edge Runtime
 This step sets up package sources for the Azure IoT Edge runtime and installs the agent on the device.
 ### 5. [CLI] - Run `az iot edge hierarchy create`
