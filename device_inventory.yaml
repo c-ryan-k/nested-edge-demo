@@ -1,0 +1,11 @@
+all:
+  hosts:
+    10.120.60.53:
+      device_id: pi_1
+    10.120.60.61:
+      device_id: pi_2
+    10.120.62.63:
+      device_id: pi_3
+  vars:
+    ansible_ssh_user: edge-user
+  

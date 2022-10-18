@@ -1,0 +1,17 @@
+- name: "Install Device Bundles"
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: "clean device config folder"
+      raw: rm -rf edge-config && mkdir edge-config
+    - name: "copy device config bundle"
+      copy:
+        src: device_bundles/{{ device_id }}.tgz
+        dest: ~/edge-config/
+    - name: "untar device bundle"
+      raw: cd edge-config && tar zxvf {{ device_id }}.tgz
+    - name: "run device config script"
+      raw: sudo bash edge-config/install.sh
+      register: edge_result
+    - debug:
+        var: edge_result.stdout_lines
