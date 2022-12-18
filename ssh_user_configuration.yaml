@@ -1,28 +1,28 @@
 - hosts: all
-  vars: 
-    createuser: 'edge-user'
-    ansible_ssh_user: 'edge'
-    ansible_ssh_password: 'edgepassword'
-    createpassword: 'supersecretpassword1'
+  vars:
+    createuser: "edge-user"
+    ansible_ssh_user: "edge"
+    ansible_ssh_password: "edgepassword"
+    createpassword: "supersecretpassword1"
     host_key_checking: False
   tasks:
-  - name: Setup | create user
-    command: sudo /usr/sbin/useradd -m {{ createuser }} creates=/home/{{ createuser }}
+    - name: Setup | create user
+      command: sudo /usr/sbin/useradd -m {{ createuser }} creates=/home/{{ createuser }}
 
-  - name: Setup | set user password
-    shell: sudo /usr/sbin/usermod -p $(echo '{{ createpassword }}' | openssl passwd -1 -stdin) {{ createuser }}
+    - name: Setup | set user password
+      shell: sudo /usr/sbin/usermod -p $(echo '{{ createpassword }}' | openssl passwd -1 -stdin) {{ createuser }}
 
-  - name: Setup | authorized key upload
-    authorized_key: user={{ createuser }}
-      key="{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
-      path='/home/{{ createuser }}/.ssh/authorized_keys'
-      manage_dir=no
-    become: yes
+    - name: Setup | authorized key upload
+      authorized_key: user={{ createuser }}
+        key="{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+        path='/home/{{ createuser }}/.ssh/authorized_keys'
+        manage_dir=no
+      become: yes
 
-  - name: Sudoers | update sudoers file and validate
-    lineinfile: "dest=/etc/sudoers
-      insertafter=EOF
-      line='{{ createuser }} ALL=(ALL) NOPASSWD: ALL'
-      regexp='{{ createuser }} ALL=(ALL) NOPASSWD: ALL'
-      state=present"
-    become: yes
+    - name: Sudoers | update sudoers file and validate
+      lineinfile: "dest=/etc/sudoers
+        insertafter=EOF
+        line='{{ createuser }} ALL=(ALL) NOPASSWD: ALL'
+        regexp='{{ createuser }} ALL=(ALL) NOPASSWD: ALL'
+        state=present"
+      become: yes

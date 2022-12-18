@@ -1,4 +1,3 @@
-
 - name: "Install Azure IoT Edge runtime"
   hosts: all
   tasks:

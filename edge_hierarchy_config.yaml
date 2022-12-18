@@ -28,4 +28,3 @@ edgedevices:
           - device_id: pi_3
             hostname: "10.120.60.61"
             deployment: deployment-low.json
-    

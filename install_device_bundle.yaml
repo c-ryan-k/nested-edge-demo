@@ -15,7 +15,7 @@
         rm -f /etc/pki/ca-trust/source/anchors/iotedge_config_cli_root.pem.crt
         rm -f /usr/local/share/ca-certificates/iotedge_config_cli_root.pem.crt
       become: True
-      
+
     - name: "copy device config bundle"
       copy:
         src: device_bundles/{{ device_id }}.tgz

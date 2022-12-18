@@ -8,4 +8,3 @@ all:
       device_id: pi_3
   vars:
     ansible_ssh_user: edge-user
-  
