@@ -37,9 +37,9 @@ This step will setup an `edge-user` user on each device, copy a key to each devi
 
 This step sets up package sources for the Azure IoT Edge runtime and installs the agent on the device.
 
-### 5. [CLI] - Run `az iot edge hierarchy create`
+### 5. [CLI] - Run `az iot edge devices create --cfg ./path/to/config/file.yml --out ./device_bundle_output/
 
-Using the config file, we will create the Edge device identities on the hub, and produce a bundle that contains:
+Using the config file, we will create the Edge device identities on the hub, and produce an archived bundle that contains:
 
 - A self-signed root CA (or loaded from properties)
 - CA Signed chained device certs
@@ -48,4 +48,12 @@ Using the config file, we will create the Edge device identities on the hub, and
 
 ### 6. [Ansible] - Install Device Bundle
 
-This step runs on all devices, grabs the appropriate `device_id.tgz` package produced by the CLI, and runs the install script on the target device.
+This step runs on all devices, copies and untars the appropriate `device_id.tgz` package produced by the CLI, and runs the install script on the target device.
+This script:
+
+- Copies all certificates to their proper locations
+- Copies the device config.toml to the /etc/aziot/ directory
+- Updates the device OS certificate store
+- Runs `iotedge config apply -C config.toml` to restart the edge agent with the new configuration.
+
+Once this script is run, the edge agent and hub should begin updating on all devices, and you should see them start connecting to the hub in a few moments.
