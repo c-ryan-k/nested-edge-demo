@@ -1,49 +1,63 @@
 {
-    "modulesContent": {
-      "$edgeAgent": {
-        "properties.desired": {
-          "schemaVersion": "1.0",
-          "runtime": {
+  "modulesContent": {
+    "$edgeAgent": {
+      "properties.desired": {
+        "schemaVersion": "1.0",
+        "runtime": {
+          "type": "docker",
+          "settings": {
+            "minDockerVersion": "v1.25",
+            "loggingOptions": "",
+            "registryCredentials": {}
+          }
+        },
+        "systemModules": {
+          "edgeAgent": {
             "type": "docker",
             "settings": {
-              "minDockerVersion": "v1.25",
-              "loggingOptions": "",
-              "registryCredentials": {
-              }
+              "image": "$upstream:443/azureiotedge-agent:1.4",
+              "createOptions": "{\n    \"HostConfig\": {\n        \"LogConfig\": {\n            \"Type\": \"local\",\n            \"Config\": {\n                \"max-size\": \"10m\",\n                \"max-file\": \"3\"\n            }\n        }\n    }\n}"
             }
           },
-          "systemModules": {
-            "edgeAgent": {
-              "type": "docker",
-              "settings": {
-                "image": "$upstream:443/azureiotedge-agent:1.2",
-                "createOptions": "{}"
-              }
-            },
-            "edgeHub": {
-              "type": "docker",
-              "status": "running",
-              "restartPolicy": "always",
-              "settings": {
-                "image": "$upstream:443/azureiotedge-hub:1.2",
-                "createOptions": "{\"HostConfig\": {\"PortBindings\": {\"5671\/tcp\": [{\"HostPort\": \"5671\"}],\"8883\/tcp\": [{\"HostPort\": \"8883\"}],\"443\/tcp\": [{\"HostPort\": \"443\"}]}}}"
-              }
+          "edgeHub": {
+            "type": "docker",
+            "status": "running",
+            "restartPolicy": "always",
+            "settings": {
+              "image": "$upstream:443/azureiotedge-hub:1.4",
+              "createOptions": "{\"HostConfig\": {\"LogConfig\": {\"Type\": \"local\", \"Config\": {\"max-size\": \"10m\", \"max-file\": \"3\"}}, \"PortBindings\": {\"5671/tcp\": [{\"HostPort\": \"5671\"}],\"8883/tcp\": [{\"HostPort\": \"8883\"}],\"443/tcp\": [{\"HostPort\": \"443\"}]}}}"
             }
-          },
-          "modules": {
           }
-        }
-      },
-      "$edgeHub": {
-        "properties.desired": {
-          "schemaVersion": "1.1",
-          "routes": {
-            "ToUpstream": "FROM /messages/* INTO $upstream"
-          },
-          "storeAndForwardConfiguration": {
-            "timeToLiveSecs": 7200
+        },
+        "modules": {
+          "SimulatedTemperatureSensor": {
+            "env": {},
+            "restartPolicy": "always",
+            "settings": {
+              "image": "mcr.microsoft.com/azureiotedge-simulated-temperature-sensor:1.0"
+            },
+            "status": "running",
+            "type": "docker"
           }
         }
       }
+    },
+    "$edgeHub": {
+      "properties.desired": {
+        "schemaVersion": "1.1",
+        "routes": {
+          "ToUpstream": "FROM /messages/* INTO $upstream"
+        },
+        "storeAndForwardConfiguration": {
+          "timeToLiveSecs": 7200
+        }
+      }
+    },
+    "SimulatedTemperatureSensor": {
+      "properties.desired": {
+        "SendData": true,
+        "SendInterval": 5
+      }
     }
   }
+}
