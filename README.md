@@ -37,7 +37,7 @@ This step will setup an `edge-user` user on each device, copy a key to each devi
 
 This step sets up package sources for the Azure IoT Edge runtime and installs the agent on the device.
 
-### 5. [CLI] - Run `az iot edge devices create --cfg ./path/to/config/file.yml --out ./device_bundle_output/
+### 5. [CLI] - Run `az iot edge devices create`
 
 Using the config file, we will create the Edge device identities on the hub, and produce an archived bundle that contains:
 
