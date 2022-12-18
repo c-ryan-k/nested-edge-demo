@@ -1,0 +1,27 @@
+
+- name: "Remove Azure IoT Edge runtime"
+  hosts: all
+  tasks:
+    # - name: "apt-get updates"
+    #   shell: |
+    #     sudo apt-get update
+    #     sudo apt-get install curl ca-certificates gnupg lsb-release -y
+    #     curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > ~/microsoft.gpg
+    #     sudo cp ~/microsoft.gpg /etc/apt/trusted.gpg.d/
+    #     curl https://packages.microsoft.com/config/debian/11/packages-microsoft-prod.deb > ./packages-microsoft-prod.deb
+    #     sudo apt install ./packages-microsoft-prod.deb
+    #     sudo apt-get update --fix-missing -y
+    - name: "Uninstall IoT Edge Runtime"
+      shell: sudo apt remove aziot-edge -y
+    - name: "remove moby container engine"
+      shell: sudo apt remove moby-engine -y
+    - name: "remove old certificates"
+      shell: |
+        rm -f /etc/aziot/certificates/iotedge_config_cli_root.pem
+        rm -f /etc/aziot/certificates/{{ device_id }}.key.pem
+        rm -f /etc/aziot/certificates/{{ device_id }}.full-chain.cert.pem
+      become: True
+    # - name: "uninstall previous versions of docker"
+    #   shell: sudo apt-get remove docker docker-engine docker.io containerd runc
+    # - name: "install docker ce"
+    #   shell: curl -fsSL get.docker.com -o get-docker.sh && sh get-docker.sh

@@ -1,0 +1,6 @@
+- name: "Reset edge"
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: "stop system, clean docker containers, restart edge"
+      raw: sudo iotedge system stop && sudo docker rm -f $(sudo docker ps -aq) && sudo iotedge config apply

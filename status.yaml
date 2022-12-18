@@ -1,0 +1,9 @@
+- name: "get iot edge status"
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: "iotedge check"
+      raw: sudo iotedge check
+      register: edge_result
+    - debug:
+        var: edge_result.stdout_lines

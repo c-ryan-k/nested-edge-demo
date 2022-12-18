@@ -2,8 +2,20 @@
   hosts: all
   gather_facts: no
   tasks:
+    # - name: "stop edge service"
+    #   shell: iotedge system stop
+    #   become: True
     - name: "clean device config folder"
       raw: rm -rf edge-config && mkdir edge-config
+    - name: "remove old certificates"
+      shell: |
+        rm -f /etc/aziot/certificates/iotedge_config_cli_root.pem
+        rm -f /etc/aziot/certificates/{{ device_id }}.key.pem
+        rm -f /etc/aziot/certificates/{{ device_id }}.full-chain.cert.pem
+        rm -f /etc/pki/ca-trust/source/anchors/iotedge_config_cli_root.pem.crt
+        rm -f /usr/local/share/ca-certificates/iotedge_config_cli_root.pem.crt
+      become: True
+      
     - name: "copy device config bundle"
       copy:
         src: device_bundles/{{ device_id }}.tgz
