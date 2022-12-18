@@ -1,6 +1,9 @@
 ## IoT nested edge hierarchy demo
 
-[`ansible`](./ansible/) - Ansible scripts for performing automated device tasks in parallel.
+### Files in this repository fall into two categories:
+
+[`ansible`](./ansible/) - Ansible scripts (and device inventory files) for performing automated device tasks in parallel.
+
 [`configs`](./configs/) - Device configs (for CLI) and sample deployment JSON files.
 
 ### Prerequisites:
