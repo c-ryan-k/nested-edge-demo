@@ -18,7 +18,7 @@
 
     - name: "copy device config bundle"
       copy:
-        src: device_bundles/{{ device_id }}.tgz
+        src: ../device_bundles/{{ device_id }}.tgz
         dest: ~/edge-config/
     - name: "untar device bundle"
       raw: cd edge-config && tar zxvf {{ device_id }}.tgz

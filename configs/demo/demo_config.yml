@@ -1,0 +1,22 @@
+configVersion: "1.0"
+
+iotHub:
+  authenticationMethod: symmetricKey
+
+edgeConfiguration:
+  defaultEdgeAgent: "$upstream:443/azureiotedge-agent:1.4"
+
+## Hierarchy of IoT Edge devices to create
+edgeDevices:
+  - deviceId: pi_1
+    hostname: "192.168.1.16"
+    edgeAgent: "mcr.microsoft.com/azureiotedge-agent:1.4"
+    deployment: top.json
+  - deviceId: pi_2
+    hostname: "192.168.1.14"
+    edgeAgent: "mcr.microsoft.com/azureiotedge-agent:1.4"
+    deployment: top.json
+    children:
+      - deviceId: pi_3
+        hostname: "192.168.1.15"
+        deployment: lower.json
