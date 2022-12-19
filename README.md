@@ -28,7 +28,7 @@
 
 ### 1. [Setup]
 
-Make sure all devices are online and pingable. 
+Make sure all devices are online and pingable.
 
 Since we're installing the Edge Agent and setting up a separate user inside ansible tasks, the only configuration these devices need are a relatively stable IP address.
 
