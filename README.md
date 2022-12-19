@@ -28,7 +28,15 @@
 
 ### 1. [Setup]
 
-Make sure all devices are online and pingable. Since we're installing the Edge Agent and setting up a separate user inside ansible tasks, the only configuration these devices need are a relatively stable IP address.
+Make sure all devices are online and pingable. 
+
+Since we're installing the Edge Agent and setting up a separate user inside ansible tasks, the only configuration these devices need are a relatively stable IP address.
+
+For this demo, I've used the [Raspberry Pi Imager](https://www.raspberrypi.com/software/) to image each device with:
+
+- Current version of Raspbian Lite (headless)
+- An `edge` user authorized with a pre-existing SSH key I've created.
+- Hostnames configured to their eventual IoT Hub device identities (`pi-1`, `pi-2`, etc)
 
 ### 2. [Ansible] - [Known Hosts config](./ansible/add_known_hosts.yaml)
 
