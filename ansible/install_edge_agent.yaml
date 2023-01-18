@@ -12,9 +12,5 @@
         sudo apt-get update --fix-missing -y
     - name: "Install moby container engine"
       shell: sudo apt-get install moby-engine -y
-    # - name: "uninstall previous versions of docker"
-    #   shell: sudo apt-get remove docker docker-engine docker.io containerd runc
-    # - name: "install docker ce"
-    #   shell: curl -fsSL get.docker.com -o get-docker.sh && sh get-docker.sh
     - name: "Install IoT Edge Runtime"
       shell: sudo apt-get install aziot-edge -y
